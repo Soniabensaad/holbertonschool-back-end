@@ -7,6 +7,8 @@ his/her TODO list progress.
 import requests
 import sys
 if __name__ == '__main__':
+    """ for a given employee ID, returns information about
+        his/her TODO list progress."""
     if len(sys.argv) != 2:
         sys.exit(1)
 
