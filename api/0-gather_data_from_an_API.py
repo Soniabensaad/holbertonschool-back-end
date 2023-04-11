@@ -7,25 +7,30 @@ his/her TODO list progress.
 import requests
 import sys
 
+# check if the correct number of arguments is provided
+if len(sys.argv) != 2:
+    sys.exit(1)
 
-if __name__ == '__main__':
+# get the employee ID from the command line argument
+employee_id = sys.argv[1]
 
-    id_c = sys.argv[1]
-    task_title = []
-    complete = 0
-    total_task = 0
-    url_user = "https://jsonplaceholder.typicode.com/users/" + id_c
-    res = requests.get(url_user).json()
-    name = res.get('name')
-    url_task = "https://jsonplaceholder.typicode.com/todos/"
-    res_task = requests.get(url_task).json()
-    for i in res_task:
-        if i.get('userId') == int(id_c):
-            if i.get('completed') is True:
-                task_title.append(i['title'])
-                complete += 1
-            total_task += 1
-    print("Employee {} is done with tasks({}/{}):"
-          .format(name, complete, total_task))
-    for x in task_title:
-        print("\t {}".format(x))
+# make the API request
+response = requests.get(f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos")
+
+# check if the API request was successful
+if response.status_code != 200:
+    sys.exit(1)
+
+# parse the API response
+tasks = response.json()
+
+# calculate the progress of the employee's TODO list
+total_tasks = len(tasks)
+done_tasks = sum(task["completed"] for task in tasks)
+employee_name = tasks[0]["username"]
+
+# display the progress of the employee's TODO list
+print(f"Employee {employee_name} is done with tasks({done_tasks}/{total_tasks}):")
+for task in tasks:
+    if task["completed"]:
+        print(f"\t {task['title']}")
