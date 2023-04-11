@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 """returns information about his/her TODO list progress."""
-import sys
 import requests
+import sys
 """
-Write a Python script that, using this REST API, 
-for a given employee ID, returns information about 
+Write a Python script that, using this REST API,
+for a given employee ID, returns information about
 his/her TODO list progress.
 """
 if __name__ == "__main__":
     """Write a Python script that, using this REST API,
-      for a given employee ID, returns information 
+      for a given employee ID, returns information
       about his/her TODO list progress."""
     api_url = "https://jsonplaceholder.typicode.com/"
     employee_ID = sys.argv[1]
@@ -20,8 +20,8 @@ if __name__ == "__main__":
     todos_data = todos.json()
     total_tasks = len(todos_data)
     tasks_completed = sum(1 for task in todos_data if task['completed'])
-    print("Employee {} is done with tasks ({}/{})".format(employee_name, tasks_completed, total_tasks))
+    print("Employee {} is done with tasks ({}/{})".
+          format(employee_name, tasks_completed, total_tasks))
     for task in todos_data:
        if task['completed']:
-           print("\t{}   {}".format(task['title'], task['completed']))
-
+        print("\t{}   {}".format(task['title'], task['completed']))
