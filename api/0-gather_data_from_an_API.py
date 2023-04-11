@@ -23,5 +23,5 @@ if __name__ == "__main__":
             complete.append(task.get("title"))
     print("Employee {} is done with tasks({}/{}):".format(
         user.get("name"), len(complete), len(todos)))
-    for i in complete:
-        print("\t {}".format(i))
+    for iii in complete:
+        print("\t {}".format(complete))
