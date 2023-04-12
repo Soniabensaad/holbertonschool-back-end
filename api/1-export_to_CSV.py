@@ -13,22 +13,22 @@ if __name__ == '__main__':
     import requests
     import sys
 
-    t = sys.argv[1]
+    id = sys.argv[1]
     response = requests.get(
-        'https://jsonplaceholder.typicode.com/users/' + t)
+        'https://jsonplaceholder.typicode.com/users/' + id)
     todos = requests.get(
-        'https://jsonplaceholder.typicode.com/todos?userId=' + t)
+        'https://jsonplaceholder.typicode.com/todos?userId=' + id)
 
-    employee = response.json()
+    data = response.json()
     todos = todos.json()
-    id = employee['id']
-    name = employee['username']
+    id = data['id']
+    name = data['username']
 
-    with open(f'{t}.csv', 'w') as file:
+    with open(f'{id}.csv', 'w') as file:
         for i in todos:
-            Ta = i['completed']
+            Task = i['completed']
             TASK_TITLE = i['title']
             TASK_COMPLETED_STATUS = i['completed']
             TASK_TITLE = i['title']
             file.write(
-                f"\"{id}\",\"{name}\",\"{Ta}\",\"{TASK_TITLE}\"\n")
+                f"\"{id}\",\"{name}\",\"{Task}\",\"{TASK_TITLE}\"\n")
