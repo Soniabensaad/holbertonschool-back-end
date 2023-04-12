@@ -7,9 +7,10 @@ Format must be:
 "USER_ID","USERNAME","TASK_COMPLETED_STATUS","TASK_TITLE"
 File name must be: USER_ID.csv
 """
-import csv
 import requests
 import sys
+import csv
+
 if __name__ == '__main__':
     id = sys.argv[1]
     url_user = "https://jsonplaceholder.typicode.com/users/" + id
@@ -23,3 +24,4 @@ if __name__ == '__main__':
         for task in tasks.json():
             writer.writerow([id, una,
                             task.get("completed"), task.get("title")])
+
