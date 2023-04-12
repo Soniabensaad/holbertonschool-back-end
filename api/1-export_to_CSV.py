@@ -19,7 +19,7 @@ if __name__ == '__main__':
         'https://jsonplaceholder.typicode.com/users/' +
         (id) + '/todos')
     with open("{}.csv".format(id), "w") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
         for t in req.json():
             writer.writerow([id, u,
                             t.get("completed"), t.get("title")])
