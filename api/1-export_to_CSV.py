@@ -11,18 +11,16 @@ import csv
 import requests
 import sys
 
-
 if __name__ == '__main__':
-    id = sys.argv[1]
-    url_user = "https://jsonplaceholder.typicode.com/users/" + id
-    data = requests.get(url_user).json()
-    username = data.get('username')
-    tasks = requests.get(
+    id_c = sys.argv[1]
+    url_user = "https://jsonplaceholder.typicode.com/users/" + id_c
+    res = requests.get(url_user).json()
+    username = res.get("username")
+    req = requests.get(
         'https://jsonplaceholder.typicode.com/users/' +
-        (id) + '/todos')
-    with open("{}.csv".format(sys.argv[1]), "w") as f:
-        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
-        for task in tasks.json():
-            writer.writerow([id, username,
+        (id_c) + '/todos')
+    with open("{}.csv".format(sys.argv[1]), "w") as file_c:
+        writer = csv.writer(file_c, quoting=csv.QUOTE_ALL)
+        for task in req.json():
+            writer.writerow([id_c, username,
                             task.get("completed"), task.get("title")])
-
