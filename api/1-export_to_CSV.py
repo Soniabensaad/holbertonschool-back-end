@@ -1,34 +1,25 @@
 #!/usr/bin/python3
 """
-Using what you did in the task #0, extend your Python script
-to export data in the CSV format.
-Records all tasks that are owned by this employee
-Format must be:
-"USER_ID","USERNAME","TASK_COMPLETED_STATUS","TASK_TITLE"
-File name must be: USER_ID.csv
+Write a Python script that, using this REST API,
+for a given employee ID, returns information about
+his/her TODO list progress
+export data in the CSV format.
 """
+import csv
+import requests
+import sys
+
 
 if __name__ == '__main__':
-    import csv
-    import requests
-    import sys
-
     id = sys.argv[1]
-    response = requests.get(
-        'https://jsonplaceholder.typicode.com/users/' + id)
-    todos = requests.get(
-        'https://jsonplaceholder.typicode.com/todos?userId=' + id)
-
-    data = response.json()
-    todos = todos.json()
-    id = data['id']
-    name = data['username']
-
-    with open(f'{id}.csv', 'w') as file:
-        for i in todos:
-            Task = i['completed']
-            TASK_TITLE = i['title']
-            TASK_COMPLETED_STATUS = i['completed']
-            TASK_TITLE = i['title']
-            file.write(
-                f"\"{id}\",\"{name}\",\"{Task}\",\"{TASK_TITLE}\"\n")
+    url_user = "https://jsonplaceholder.typicode.com/users/" + id
+    res = requests.get(url_user).json()
+    username = res.get("username")
+    req = requests.get(
+        'https://jsonplaceholder.typicode.com/users/' +
+        (id) + '/todos')
+    with open("{}.csv".format(sys.argv[1]), "w") as f:
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
+        for task in req.json():
+            writer.writerow([id, username,
+                            task.get("completed"), task.get("title")])
