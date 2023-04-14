@@ -6,7 +6,6 @@
 import json
 import requests
 import sys
-
 if __name__ == '__main__':
     user_id = sys.argv[1]
     url = "https://jsonplaceholder.typicode.com/"
@@ -16,14 +15,13 @@ if __name__ == '__main__':
     tasks = []
     for task in todo_data:
         task_dict = {
+            "username": user_data["username"],
             "task": task["title"],
-            "completed": task["completed"],
-            "username": user_data["username"]
-        }
+            "completed": task["completed"]}
+            
         tasks.append(task_dict)
 
     data = {user_id: tasks}
 
     with open(user_id + '.json', 'w') as f:
         json.dump(data, f)
-
