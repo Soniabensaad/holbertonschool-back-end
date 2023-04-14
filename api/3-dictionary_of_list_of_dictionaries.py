@@ -7,20 +7,25 @@ import json
 import requests
 import sys
 if __name__ == '__main__':
-    user_id = sys.argv[1]
     url = "https://jsonplaceholder.typicode.com/"
-    user_data = requests.get(url + "users/" + user_id).json()
-    todo_data = requests.get(url + "todos?userId=" + user_id).json()
+    user_data = requests.get(url + "users/").json()
+    todo_data = requests.get(url + "todos?userId=").json()
 
-    tasks = []
-    for task in todo_data:
-        task_dict = {
-            "username": user_data["username"],
-            "task": task["title"],
-            "completed": task["completed"]}
-        tasks.append(task_dict)
+    user_dict = {}
+    for user in user_data:
+        user_id = user["id"]
+        username = user["username"]
+    user_dict[user_id ] = []
+    for todo in todo_data:
+        if user_id == todo["users_id"]:
+            user_dict[user_id].append({
+                "username": username,
+                "task": todo["title"],
+                "completed": todo["completed"]
 
-    data = {user_id: tasks}
+            })
 
-    with open(user_id + '.json', 'w') as f:
-        json.dump(data, f)
+        
+
+    with open("todo_all_employees.json", "w") as f:
+        json.dump(user_id, f)
