@@ -17,7 +17,7 @@ if __name__ == '__main__':
         task_dict = {
             "username": user_data["username"],
             "task": task["title"],
-            "completed": task["completed"]}   
+            "completed": task["completed"]}
         tasks.append(task_dict)
 
     data = {user_id: tasks}
